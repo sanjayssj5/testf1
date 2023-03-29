@@ -1,17 +1,22 @@
+//Select the Main background picture div as _parent_ and x ray view item as draggable
 const draggable = document.getElementsByClassName('resizable')[0];
 const _parent_ = document.getElementsByClassName('container')[0];
+const imgg = document.getElementById('res-img');
 
+
+//Get the bounding clien details of both
 var _parent_Rect=_parent_.getBoundingClientRect();
 var draggableRect=draggable.getBoundingClientRect();
+
+
+//Correction value for minute overlay differences 
 const correction =5;
 
-const imgg=document.getElementById('res-img');
-
-//set initials
+//set initial values for overlay
 imgg.style.left=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().left+correction}px`;
 imgg.style.top=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().top+correction}px`;
 
-
+// Drag of x ray view
 let isDragging = false;
 
 _parent_.addEventListener('mousedown', dragStart);
@@ -24,7 +29,6 @@ function dragStart(e) {
 
   e.preventDefault();
 
-  //if(e.ctrlKey)
 
   isDragging = true;
 }
@@ -75,12 +79,15 @@ function drag(e){
 }
 
 
-
+//Resize of X ray image
 
 function makeResizableDiv(div) {
   const element = document.querySelector(div);
   const resizers = document.querySelectorAll(div + ' .resizer')
   const minimum_size = 80;
+  const maximum_size_width =_parent_Rect.width;
+  const maximum_size_height =_parent_Rect.height;
+
   let original_width = 0;
   let original_height = 0;
   let original_x = 0;
@@ -108,20 +115,20 @@ function makeResizableDiv(div) {
       if (currentResizer.classList.contains('bottom-right')) {
         const width = original_width + (e.clientX - original_mouse_x);
         const height = original_height + (e.clientY - original_mouse_y)
-        if (width > minimum_size) {
+        if (width > minimum_size && width<maximum_size_width) {
           element.style.width = width + 'px'
         }
-        if (height > minimum_size) {
+        if (height > minimum_size && height<maximum_size_height) {
           element.style.height = height + 'px'
         }
       }
       else if (currentResizer.classList.contains('bottom-left')) {
         const height = original_height + (e.clientY - original_mouse_y)
         const width = original_width - (e.clientX - original_mouse_x)
-        if (height > minimum_size) {
+        if (height > minimum_size && height<maximum_size_height ) {
           element.style.height = height + 'px'
         }
-        if (width > minimum_size) {
+        if (width > minimum_size && width<maximum_size_width) {
           element.style.width = width + 'px'
           element.style.left = original_x + (e.clientX - original_mouse_x) + 'px'
           imgg.style.left=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().left}px`;
@@ -131,10 +138,10 @@ function makeResizableDiv(div) {
       else if (currentResizer.classList.contains('top-right')) {
         const width = original_width + (e.clientX - original_mouse_x)
         const height = original_height - (e.clientY - original_mouse_y)
-        if (width > minimum_size) {
+        if (width > minimum_size && width<maximum_size_width) {
           element.style.width = width + 'px'
         }
-        if (height > minimum_size) {
+        if (height > minimum_size && height<maximum_size_height ) {
           element.style.height = height + 'px'
           element.style.top = original_y + (e.clientY - original_mouse_y) + 'px'
           imgg.style.top=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().top}px`;
@@ -144,13 +151,13 @@ function makeResizableDiv(div) {
       else {
         const width = original_width - (e.clientX - original_mouse_x)
         const height = original_height - (e.clientY - original_mouse_y)
-        if (width > minimum_size) {
+        if (width > minimum_size && width<maximum_size_width) {
           element.style.width = width + 'px'
           element.style.left = original_x + (e.clientX - original_mouse_x) + 'px'
           imgg.style.left=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().left}px`;
 
         }
-        if (height > minimum_size) {
+        if (height > minimum_size && height<maximum_size_height) {
           element.style.height = height + 'px'
           element.style.top = original_y + (e.clientY - original_mouse_y) + 'px'
           imgg.style.top=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().top}px`;
@@ -166,37 +173,4 @@ function makeResizableDiv(div) {
 }
 
 makeResizableDiv('.resizable') 
-
-/*
-let isResizing = false;
-let lastX;
-let lastY;
-let sensitivity = 1; // adjust this value to change the resize sensitivity
-
-draggable.addEventListener('mousedown', e => {
-  e.preventDefault();
-  isResizing = true;
-  lastX = e.clientX;
-  lastY = e.clientY;
-});
-
-document.addEventListener('mousemove', e => {
-  if (isResizing &&  !e.ctrlKey  ) {
-    const deltaX = e.clientX - lastX;
-    const deltaY = e.clientY - lastY;
-    const rect = _parent_Rect;
-    const width = draggable.offsetWidth + deltaX * sensitivity;
-    const height = draggable.offsetHeight + deltaY * sensitivity;
-
-    draggable.style.width = Math.max(100, Math.min(rect.width - draggable.offsetLeft, width)) + 'px';
-    draggable.style.height = Math.max(100, Math.min(rect.height - draggable.offsetTop, height)) + 'px';
-
-    lastX = e.clientX;
-    lastY = e.clientY;
-  }
-});
-
-document.addEventListener('mouseup', e => {
-  isResizing = false;
-});*/
 
