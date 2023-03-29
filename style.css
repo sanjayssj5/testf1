@@ -4,8 +4,8 @@ body{
 }
 .container {
   position: relative;
-  width: 1400px;
-  height: 900px;
+  width: 800px;
+  height: 500px;
   overflow: hidden;
 
 }
@@ -23,8 +23,8 @@ body{
   position: absolute;
   top: 50px;
   left: 50px;
- width: 250px;
- height: 250px;
+ width: 150px;
+ height: 150px;
   z-index: 2;
   overflow: hidden;
  
@@ -34,8 +34,8 @@ body{
 
 .resizable img {
   position: relative;
-   width: 1400px;
-   height: 900px;
+   width: 800px;
+   height: 500px;
 
   
 }
