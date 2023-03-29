@@ -22,7 +22,7 @@ let iniX=0;
 let iniY=0;
 function dragStart(e) {
 
-  //e.preventDefault();
+  e.preventDefault();
 
   //if(e.ctrlKey)
 
@@ -31,7 +31,7 @@ function dragStart(e) {
 
 function dragEnd(e) {
 
-  //e.preventDefault();
+  e.preventDefault();
 
 isDragging=false;  
 }
@@ -42,8 +42,8 @@ function drag(e){
 
   if(isDragging){
 
-    if( (e.clientX >= _parent_Rect.left && (e.clientX+draggableRect.width <= _parent_Rect.right)) &&
-			  	(e.clientY >= _parent_Rect.top && (e.clientY+draggableRect.height <= _parent_Rect.bottom))  
+    if( (e.clientX >= _parent_Rect.left && (e.clientX+draggableRect.width <= _parent_Rect.right+200)) &&
+			  	(e.clientY >= _parent_Rect.top && (e.clientY+draggableRect.height <= _parent_Rect.bottom+200))  
 			  ){
         //add draggableRect.width draggableRect.height accoints for
         draggable.style.left = `${e.clientX-document.getElementsByClassName('resizable')[0].getBoundingClientRect().width/2  }px` ;
@@ -53,9 +53,9 @@ function drag(e){
         
 
 			}
-      else{
+      /* else{
         //if mouse went out of bounds in Horizontal dir.
-        /*if(e.clientX+draggableRect.width >= _parent_Rect.right  ){
+       if(e.clientX+draggableRect.width >= _parent_Rect.right  ){
           draggable.style.left = `${_parent_Rect.right-draggableRect.width}px`;
           imgg.style.left=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().left+correction}px`;
 
@@ -64,22 +64,10 @@ function drag(e){
         if(e.clientY+draggableRect.height >= _parent_Rect.bottom){
           draggable.style.top = `${_parent_Rect.bottom-draggableRect.height}px`;
           imgg.style.top=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().top+correction}px`;
-*/
 
-if(e.clientX+draggableRect.width/2 >= _parent_Rect.right  ){
-  draggable.style.left = `${_parent_Rect.right-draggableRect.width-5}px`;
-  imgg.style.left=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().left+correction}px`;
 
-}
-//if mouse went out of bounds in Vertical dir.
-if(e.clientY+draggableRect.height/2 >= _parent_Rect.bottom){
-  draggable.style.top = `${_parent_Rect.bottom-draggableRect.height-5}px`;
-  imgg.style.top=`${-document.getElementsByClassName('resizable')[0].getBoundingClientRect().top+correction}px`;
 
-          
-
-        }
-      }
+      }*/
 
 
 
@@ -92,7 +80,7 @@ if(e.clientY+draggableRect.height/2 >= _parent_Rect.bottom){
 function makeResizableDiv(div) {
   const element = document.querySelector(div);
   const resizers = document.querySelectorAll(div + ' .resizer')
-  const minimum_size = 20;
+  const minimum_size = 80;
   let original_width = 0;
   let original_height = 0;
   let original_x = 0;
